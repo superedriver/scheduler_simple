@@ -1,0 +1,85 @@
+/* line 1, ../sass/toolbar.scss */
+.sch-clear {
+  clear: both;
+}
+
+/* line 5, ../sass/toolbar.scss */
+.sch-left {
+  float: left;
+}
+
+/* line 9, ../sass/toolbar.scss */
+.sch-center {
+  text-align: center;
+}
+
+/* line 13, ../sass/toolbar.scss */
+.sch-right {
+  float: right;
+}
+
+/* line 2, ../sass/table.scss */
+.main-table th, .main-table td {
+  border: 1px solid #3e444c;
+  text-align: center;
+  height: 40px;
+}
+
+/* line 5, ../sass/index.scss */
+html,
+body {
+  height: 100%;
+}
+
+/* line 10, ../sass/index.scss */
+header {
+  position: absolute;
+  height: 50px;
+}
+
+/* line 15, ../sass/index.scss */
+.wrapper {
+  width: 80%;
+  margin: auto;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  min-height: 100%;
+}
+/* line 22, ../sass/index.scss */
+.wrapper::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 29, ../sass/index.scss */
+footer.page-footer {
+  min-height: 50px;
+  padding: 20px;
+  background-color: #33373B;
+  height: 50px;
+  margin-top: -50px;
+}
+/* line 37, ../sass/index.scss */
+footer.page-footer .info {
+  float: left;
+}
+/* line 41, ../sass/index.scss */
+footer.page-footer .copyright {
+  float: right;
+}
+
+/* line 47, ../sass/index.scss */
+main {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/* line 51, ../sass/index.scss */
+main ul {
+  display: inline-block;
+}
+
+/* line 56, ../sass/index.scss */
+.center {
+  text-align: center;
+}

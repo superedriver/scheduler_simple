@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scheduler</title>
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/index.css" rel="stylesheet" media="screen">
+    <script src="javascript/jquery-3.1.0.min.js"></script>
+    <script src="javascript/main.js"></script>
+    <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+    <script src='javascript/moment.min.js'></script>
+    <script src='fullcalendar/fullcalendar.js'></script>
+</head>
+<body>
+<header class="page-header">
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a id="logo" href="#" class="navbar-brand">Scheduler</a>
+            </div>
+            <div id="navbar-main" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="registration-link"><a href="#">Registration</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="wrapper">
+
+</div>
+<footer class="page-footer">
+    <section class="info">
+        Footer info section
+    </section>
+    <section class="copyright">
+        © 2016 Super-Puper Site
+    </section>
+</footer>
+
+<script id="registration-form" type="text/html">
+    <div class="well bs-component">
+        <form class="form-horizontal" id="registrationForm" name="registrationForm"  method="post">
+            <fieldset>
+                <legend>Registration</legend>
+                <div class="form-group">
+                    <label for="registrationEmail" class="col-lg-2 control-label">Email</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="registrationEmail" name="registrationEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="registrationPassword" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" id="registrationPassword" name="registrationPassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPasswordConfirmation" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" id="inputPasswordConfirmation" name="inputPasswordConfirmation" placeholder="Password Confirmation">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Registration</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script id="login-form" type="text/html">
+    <div class="well bs-component">
+        <form class="form-horizontal" id="loginForm" name="loginForm"  method="post">
+            <fieldset>
+                <legend>Login</legend>
+                <div class="form-group">
+                    <label for="loginEmail" class="col-lg-2 control-label">Email</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="loginEmail" placeholder="Email" name="loginEmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password" name="loginPassword">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script id="new-event-form" type="text/html">
+    <div class="well bs-component">
+        <form class="form-horizontal" id="newEventForm" name="newEventForm"  method="post">
+            <fieldset>
+                <legend>Create New Event</legend>
+                <div class="form-group">
+                    <label for="newEventDateStart" class="col-lg-2 control-label">From Time</label>
+                    <div class="col-lg-10">
+                        <input type="datetime" class="form-control" id="newEventDateStart" placeholder="2016-08-04T12:00:00.000Z" name="newEventDateStart">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="newEventDateFinish" class="col-lg-2 control-label">To Time</label>
+                    <div class="col-lg-10">
+                        <input type="datetime" class="form-control" id="newEventDateFinish" placeholder="2016-08-04T15:00:00.000Z" name="newEventDateFinish">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="newEventName" class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="newEventName" placeholder="Name" name="newEventName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="newEventDescription" class="col-lg-2 control-label">Description</label>
+                    <div class="col-lg-10">
+                        <textarea class="form-control" rows="3" id="newEventDescription" name="newEventDescription"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create event</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+</body>
+</html>

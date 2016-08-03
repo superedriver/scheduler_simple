@@ -1,0 +1,6 @@
+/* line 2, ../sass/table.scss */
+.main-table th, .main-table td {
+  border: 1px solid #3e444c;
+  text-align: center;
+  height: 40px;
+}
