@@ -13,6 +13,9 @@
     <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
     <script src='javascript/moment.min.js'></script>
     <script src='fullcalendar/fullcalendar.js'></script>
+    <script src='javascript/bootstrap.min.js'></script>
+    <script src='javascript/handlebars-v4.0.5.js'></script>
+    <script src='javascript/Form.js'></script>
 </head>
 <body>
 <header class="page-header">
@@ -46,6 +49,12 @@
         <form class="form-horizontal" id="registrationForm" name="registrationForm"  method="post">
             <fieldset>
                 <legend>Registration</legend>
+                <div class="form-group">
+                    <label for="registrationName" class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="registrationName" name="registrationName" placeholder="Name">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="registrationEmail" class="col-lg-2 control-label">Email</label>
                     <div class="col-lg-10">
@@ -143,5 +152,54 @@
     </div>
 </script>
 
+<script id="show-profile-form" type="text/x-handlebars-template">
+    <h1>User information:</h1>
+    <hr>
+    <ul class="list-group">
+        <li class="list-group-item"><b class="text-info">Name:</b>&nbsp; {{name}}</li>
+        <li class="list-group-item"><b class="text-info">Email:</b>&nbsp; {{email}}</li>
+        <li class="list-group-item"><b class="text-info">Password:</b>&nbsp; *****</li>
+    </ul>
+</script>
+
+<script id="edit-profile-form" type="text/x-handlebars-template">
+    <div class="well bs-component">
+        <form class="form-horizontal" id="editProfileForm" name="editProfileForm"  method="post">
+            <fieldset>
+                <legend>Edit Profile</legend>
+                <div class="form-group">
+                    <label for="editProfileName" class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="editProfileName" name="editProfileName" placeholder="Name" value={{name}} >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editProfileEmail" class="col-lg-2 control-label">Email</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="editProfileEmail" name="editProfileEmail" placeholder="Email" value={{email}}>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editProfilePassword" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" id="editProfilePassword" name="editProfilePassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editProfileConfirmation" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" id="editProfileConfirmation" name="editProfileConfirmation" placeholder="Password Confirmation">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
 </body>
 </html>

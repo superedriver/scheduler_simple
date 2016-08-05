@@ -1,4 +1,7 @@
 var currentUser;
+
+
+
 $(document).ready(function() {
     main();
     $("#logo").on("click", function() {
@@ -8,7 +11,7 @@ $(document).ready(function() {
 
 function main(){
     if (currentUser){
-        $(".wrapper").html("<h2 class='text-success center'>Current User: " + currentUser + "</h2>");
+        $(".wrapper").html("");
         $(".wrapper").append("<br><br><br>");
         // show calendar
         $(".wrapper").append("<div id='calendar'></div>");
@@ -73,6 +76,7 @@ function renderRegistrationForm (){
 
         var transmittedData = {};
         transmittedData.user = {};
+        transmittedData.user.name = this.registrationName.value;
         transmittedData.user.email = this.registrationEmail.value;
         transmittedData.user.password = this.registrationPassword.value;
         transmittedData.user.password_confirmation = this.inputPasswordConfirmation.value;
@@ -129,21 +133,34 @@ function renderLoginForm (){
 }
 
 function renderNavbarLinksAfterLogin (){
-    $("#navbar-main ul").html('');
+    var headerMenu = $("#navbar-main ul");
+    headerMenu.html('');
 
-    $("#navbar-main ul").append('<li id="new-event-link"><a href="#">Create event</a></li>');
+    headerMenu.append('<li id="show-profile-link"><a href="#">Show Profile</a></li>');
+    $("#show-profile-link").on("click", function( event ) {
+        event.preventDefault();
+        renderShowProfile();
+    });
+
+    headerMenu.append('<li id="edit-profile-link"><a href="#">Edit Profile</a></li>');
+    $("#edit-profile-link").on("click", function( event ) {
+        event.preventDefault();
+        renderEditProfile();
+    });
+
+    headerMenu.append('<li id="new-event-link"><a href="#">Create event</a></li>');
     $("#new-event-link").on("click", function( event ) {
         event.preventDefault();
         renderNewEventForm();
     });
 
-    $("#navbar-main ul").append('<li id="calendar-link"><a href="#">Calendar</a></li>');
+    headerMenu.append('<li id="calendar-link"><a href="#">Calendar</a></li>');
     $("#calendar-link").on("click", function( event ) {
         event.preventDefault();
         main();
     });
 
-    $("#navbar-main ul").append('<li id="logout-link"><a href="#">Logout</a></li>');
+    headerMenu.append('<li id="logout-link"><a href="#">Logout</a></li>');
     $("#logout-link").on("click", function( event ) {
         event.preventDefault();
         currentUser = null;
@@ -158,10 +175,6 @@ function renderNewEventForm (){
 
     $("#newEventForm").on("submit", function( event ) {
         event.preventDefault();
-
-        // date_start: event.date_start,
-        //     date_finish: event.date_finish,
-        //     token: user.token
 
         var transmittedData = {};
         transmittedData.date_start = this.newEventDateStart.value;
@@ -185,23 +198,100 @@ function renderNewEventForm (){
         return false;
     });
 }
-function apiConnect (url, method, data, callback){
-    var returnedData = {};
-    $.ajax({
-        url: url,
-        type: method,
-        dataType: "json",
-        data: JSON.stringify(data),
-        contentType: "application/json;charset=UTF-8",
-        success: function (data, textStatus, xhr) {
-            returnedData.status = xhr.status;
-            returnedData.data = data;
-            callback(null, returnedData);
-        },
-        error: function (xhr) {
-            returnedData.status = xhr.status;
-            returnedData.data = xhr.responseText;
-            callback(returnedData);
+
+function renderShowProfile(){
+    var url = "http://localhost:3000/v1/users?token=" + currentUser;
+    apiConnect(url, "GET", {}, function(error, returnedData){
+        if (error){
+            var html = "<h2 class='text-danger center'>" + error + "</h2>";
+            $(".wrapper").after(html);
+        }else{
+            var source   = $("#show-profile-form").html();
+            var template = Handlebars.compile(source);
+            var data = {
+                name: returnedData.data.name,
+                email: returnedData.data.email
+            };
+            $(".wrapper").html(template(data));
         }
     });
 }
+
+function renderEditProfile(){
+    var url = "http://localhost:3000/v1/users?token=" + currentUser;
+    apiConnect(url, "GET", {}, function(error, returnedData){
+        if (error){
+            var html = "<h2 class='text-danger center'>" + error + "</h2>";
+            $(".wrapper").after(html);
+        }else{
+            var source   = $("#edit-profile-form").html();
+            var template = Handlebars.compile(source);
+            var data = {
+                // user:{
+                    name: returnedData.data.name,
+                    email: returnedData.data.email
+                // }
+            };
+
+            $(".wrapper").html(template(data));
+
+
+            $("#editProfileForm").on("submit", function( event ) {
+                event.preventDefault();
+
+                var transmittedData = {};
+                transmittedData.user = {};
+                transmittedData.user.name = this.editProfileName.value;
+                transmittedData.user.email = this.editProfileEmail.value;
+                transmittedData.user.password = this.editProfilePassword.value;
+                transmittedData.user.password_confirmation = this.editProfileConfirmation.value;
+
+                var url = "http://localhost:3000/v1/users" + "?token=" + currentUser;
+
+                apiConnect(url, "PUT", transmittedData, function(error, returnedData){
+                    if (error){
+                        var html = "<h2 class='text-danger center'>" + error + "</h2>";
+                        $(".wrapper").after(html);
+                    }else{
+                        currentUser = returnedData.data.token;
+                        main();
+                    }
+                });
+                return false;
+            });
+        }
+    });
+}
+
+
+function apiConnect (url, method, data, callback){
+    var returnedData = {};
+    var responsedObject = {};
+
+    responsedObject.url = url;
+    responsedObject.dataType = "json";
+    responsedObject.contentType = "application/json;charset=UTF-8";
+    responsedObject.data = JSON.stringify(data);
+
+    if (method.toLowerCase() == "put"){
+        responsedObject.type = "POST";
+        responsedObject.headers = {"X-HTTP-Method-Override": "PUT"}; // X-HTTP-Method-Override set to PUT.
+    }else{
+        responsedObject.type = method;
+    }
+
+    responsedObject.success = function (data, textStatus, xhr) {
+        returnedData.status = xhr.status;
+        returnedData.data = data;
+        callback(null, returnedData);
+    };
+
+    responsedObject.error = function (xhr) {
+        returnedData.status = xhr.status;
+        returnedData.data = xhr.responseText;
+        callback(returnedData);
+    };
+
+    $.ajax(responsedObject);
+}
+
